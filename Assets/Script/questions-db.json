@@ -1,0 +1,115 @@
+{
+  "quiz_title": "EldenQuiz",
+  "questoes": [
+    {
+      "id": "questao-1",
+      "enunciado": "Qual é o estúdio responsável pelo desenvolvimento de Elden Ring?",
+      "alternativas": [
+        "FromSoftware",
+        "Bethesda",
+        "Rockstar Games",
+        "Ubisoft"
+      ],
+      "respostaCorreta": 0
+    },
+    {
+      "id": "questao-2",
+      "enunciado": "Quem é o escritor responsável pela história de Elden Ring?",
+      "alternativas": [
+        "Hidetaka Miyazaki",
+        "George R. R. Martin",
+        "Neil Gaiman",
+        "J. K. Rowling"
+      ],
+      "respostaCorreta": 1
+    },
+    {
+      "id": "questao-3",
+      "enunciado": "Em que plataforma(s) Elden Ring estará disponível?",
+      "alternativas": [
+        "PlayStation 5",
+        "Xbox Series X/S",
+        "PC",
+        "Todas as opções acima"
+      ],
+      "respostaCorreta": 3
+    },
+    {
+      "id": "questao-4",
+      "enunciado": "Qual é o nome do personagem principal de Elden Ring?",
+      "alternativas": [
+        "Elden",
+        "The Ashen One",
+        "Ringo",
+        "Não há um definido"
+      ],
+      "respostaCorreta": 3
+    },
+    {
+      "id": "questao-5",
+      "enunciado": "Quem é o vilão de Elden Ring?",
+      "alternativas": [
+        "Sauron",
+        "Melkor",
+        "Rainha Marika",
+        "Não foi revelado"
+      ],
+      "respostaCorreta": 2
+    },
+    {
+      "id": "questao-6",
+      "enunciado": "O que é o Elden Ring?",
+      "alternativas": [
+        "Uma espada lendária",
+        "Uma criatura poderosa",
+        "Um artefato que mantém o mundo unido",
+        "Um objeto mágico que concede desejos"
+      ],
+      "respostaCorreta": 2
+    },
+    {
+      "id": "questao-7",
+      "enunciado": "Em que tipo de ambiente Elden Ring é ambientado?",
+      "alternativas": [
+        "Futurista",
+        "Fantasia medieval",
+        "Espacial",
+        "Pós-apocalíptico"
+      ],
+      "respostaCorreta": 1
+    },
+    {
+      "id": "questao-8",
+      "enunciado": "Qual é o gênero de Elden Ring?",
+      "alternativas": [
+        "Ação e aventura",
+        "Simulação",
+        "Esporte",
+        "Estratégia em tempo real"
+      ],
+      "respostaCorreta": 0
+    },
+    {
+      "id": "questao-9",
+      "enunciado": "Quais habilidades o jogador pode aprimorar em Elden Ring?",
+      "alternativas": [
+        "Força, agilidade e inteligência",
+        "Vitalidade, fortitude e destreza",
+        "Natação, escalada e sobrevivência",
+        "Nenhuma das opções acima"
+      ],
+      "respostaCorreta": 1
+    },
+    {
+      "id": "questao-10",
+      "enunciado": "Quais elementos de jogabilidade Elden Ring compartilha com a série Dark Souls?",
+      "alternativas": [
+        "Combate desafiador e morte permanente",
+        "Mundo aberto e vários finais possíveis",
+        "Elementos de RPG como customização de personagem e diálogos com NPC",
+        "Todas as opções acima"
+      ],
+      "respostaCorreta": 3
+    }
+  ]
+}
