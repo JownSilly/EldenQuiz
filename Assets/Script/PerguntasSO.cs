@@ -25,4 +25,7 @@ public class PerguntasSO : ScriptableObject
     {
         return enunciado;
     }
+    public string getId(){
+        return id;
+    }
 }

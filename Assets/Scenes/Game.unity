@@ -353,6 +353,8 @@ MonoBehaviour:
   - {fileID: 290036561}
   - {fileID: 1323504000}
   - {fileID: 1702332431}
+  spritealtCorreta: {fileID: 0}
+  spritealtIcorreta: {fileID: 0}
 --- !u!1 &290036561
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,7 +368,7 @@ GameObject:
   - component: {fileID: 290036564}
   - component: {fileID: 290036563}
   m_Layer: 0
-  m_Name: Alternativa-2
+  m_Name: Alternativa-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -436,7 +438,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 290036564}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 246180977}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: HandleOption
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &290036564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -592,9 +606,8 @@ GameObject:
   - component: {fileID: 376095017}
   - component: {fileID: 376095016}
   - component: {fileID: 376095015}
-  - component: {fileID: 376095018}
   m_Layer: 0
-  m_Name: Alternativa-1
+  m_Name: Alternativa-0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -664,7 +677,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 376095016}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 246180977}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: HandleOption
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &376095016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -703,26 +728,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376095013}
   m_CullTransparentMesh: 1
---- !u!95 &376095018
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 376095013}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 603367ffa0bde4e4bb878c78ecd80f0d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &474812697
 GameObject:
   m_ObjectHideFlags: 0
@@ -1990,7 +1995,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1323504003}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 246180977}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: HandleOption
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1323504003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2757,7 +2774,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1702332434}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 246180977}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: HandleOption
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1702332434
 MonoBehaviour:
   m_ObjectHideFlags: 0
