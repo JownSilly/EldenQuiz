@@ -353,8 +353,8 @@ MonoBehaviour:
   - {fileID: 290036561}
   - {fileID: 1323504000}
   - {fileID: 1702332431}
-  spritealtCorreta: {fileID: 0}
-  spritealtIcorreta: {fileID: 0}
+  spritealtCorreta: {fileID: 21300000, guid: 1986eef3df885b943aff8ca750581f0f, type: 3}
+  spritealtIncorreta: {fileID: 21300000, guid: c0dc94633e694d941856d57b1b7c365f, type: 3}
 --- !u!1 &290036561
 GameObject:
   m_ObjectHideFlags: 0
@@ -1925,7 +1925,7 @@ GameObject:
   - component: {fileID: 1323504003}
   - component: {fileID: 1323504002}
   m_Layer: 0
-  m_Name: Alternativa-3
+  m_Name: Alternativa-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2704,7 +2704,7 @@ GameObject:
   - component: {fileID: 1702332434}
   - component: {fileID: 1702332433}
   m_Layer: 0
-  m_Name: Alternativa-4
+  m_Name: Alternativa-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
