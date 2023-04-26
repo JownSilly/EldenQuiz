@@ -2056,6 +2056,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1355226314}
   - component: {fileID: 1355226315}
+  - component: {fileID: 1355226316}
   m_Layer: 0
   m_Name: Temporizador
   m_TagString: Untagged
@@ -2137,6 +2138,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1355226316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355226313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7537bf95332254aac33b9a14813dd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTime: 10
 --- !u!1 &1374874330
 GameObject:
   m_ObjectHideFlags: 0
