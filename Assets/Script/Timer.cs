@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
+    //Referencia ao Metodo GameManager, GameManager Delega função para Time
+    public delegate void NextQuestion();
+    public NextQuestion nextQuestion;
     [SerializeField] private float maxTime;
      private float currentTime;
      private Slider slide;
@@ -25,9 +28,13 @@ public class Timer : MonoBehaviour
     {
         currentTime += 1 * Time.deltaTime;
         if(currentTime > maxTime){
+            nextQuestion();
             Debug.Log("cabo");
             currentTime = 0f;
         }
         slide.value = currentTime;
+    }
+    public void RegistraProximaQuestao(NextQuestion metod){
+        nextQuestion += metod;
     }
 }

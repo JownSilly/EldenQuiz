@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Timer temporizador = GetComponent<Timer>();
+        temporizador.RegistraProximaQuestao();
         textoEnunciado.SetText(perguntaAtual.getEnunciado());
         string[] alternativas = perguntaAtual.getAlternativas();
         for (int i = 0; i < alternativas.Length; i++)
@@ -23,7 +25,7 @@ public class GameManager : MonoBehaviour
             alt.SetText(alternativas[i]);
         }
     }
-    //Manuseia as opçoes selecionadas
+    //Manuseia as opï¿½oes selecionadas
     public void HandleOption(int alternativaSelecionada)
     {
         if(alternativaSelecionada == perguntaAtual.getRespostaCorreta()){
@@ -37,11 +39,11 @@ public class GameManager : MonoBehaviour
             ChangeButtonSprite(alternativaTMP[perguntaAtual.getRespostaCorreta()].GetComponent<Image>(), spritealtCorreta);
         }
     }
-    //Funçao para alterar o sprite dos botoes selecionados
+    //Funï¿½ao para alterar o sprite dos botoes selecionados
     public void ChangeButtonSprite(Image imgBtn, Sprite spriteAlt){
         imgBtn.sprite = spriteAlt;
     }
-    //Função para Desabilitar os Botoes desnecessários
+    //Funï¿½ï¿½o para Desabilitar os Botoes desnecessï¿½rios
     public void DisableOptionButtons(int alternativaSelecionada)
     {
         for(int i= 0; i< alternativaTMP.Length; i++)
@@ -58,6 +60,7 @@ public class GameManager : MonoBehaviour
             
         }
     }
+    public void 
     // Update is called once per frame
     void Update()
     {
