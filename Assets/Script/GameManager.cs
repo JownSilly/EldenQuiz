@@ -5,37 +5,37 @@ using TMPro;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
+    [Header("Questões do Quiz")]
     [SerializeField] private PerguntasSO perguntaAtual;
+    [SerializeField] private PerguntasSO[] perguntasDoQuiz;
     [SerializeField] private TextMeshProUGUI textoEnunciado;
     [SerializeField] private GameObject[] alternativaTMP;
-    [Header ("sprites")]
+    private int indiceQuestion;
+    [Header ("Alternar sprites")]
     [SerializeField] private Sprite spritealtCorreta;
     [SerializeField] private Sprite spritealtIncorreta;
-    
+    [SerializeField] private Timer temporizador;
     // Start is called before the first frame update
     void Start()
     {
-        Timer temporizador = GetComponent<Timer>();
-        temporizador.RegistraProximaQuestao();
-        textoEnunciado.SetText(perguntaAtual.getEnunciado());
-        string[] alternativas = perguntaAtual.getAlternativas();
-        for (int i = 0; i < alternativas.Length; i++)
-        {
-            TextMeshProUGUI alt = alternativaTMP[i].GetComponentInChildren<TextMeshProUGUI>();
-            alt.SetText(alternativas[i]);
-        }
+        indiceQuestion = 0;
+        temporizador.RegistrarParada(OnStoppedTimer);
+        CallQuestion(indiceQuestion);
+        //temporizador.RegistraProximaQuestao(CallQuestion);
     }
     //Manuseia as op�oes selecionadas
     public void HandleOption(int alternativaSelecionada)
     {
-        if(alternativaSelecionada == perguntaAtual.getRespostaCorreta()){
+        DisableOptionButtons();
+        StopTimer();
+
+        if (alternativaSelecionada == perguntaAtual.getRespostaCorreta()){
             ChangeButtonSprite(alternativaTMP[alternativaSelecionada].GetComponent<Image>(), spritealtCorreta);
-            DisableOptionButtons(alternativaSelecionada);
+            
             Debug.Log("ganhoooo");
         }else{
             ChangeButtonSprite(alternativaTMP[alternativaSelecionada].GetComponent<Image>(), spritealtIncorreta);
             Debug.Log("perdeuuuuuuu");
-            DisableOptionButtons(alternativaSelecionada);
             ChangeButtonSprite(alternativaTMP[perguntaAtual.getRespostaCorreta()].GetComponent<Image>(), spritealtCorreta);
         }
     }
@@ -44,26 +44,54 @@ public class GameManager : MonoBehaviour
         imgBtn.sprite = spriteAlt;
     }
     //Fun��o para Desabilitar os Botoes desnecess�rios
-    public void DisableOptionButtons(int alternativaSelecionada)
+    public void DisableOptionButtons()
     {
         for(int i= 0; i< alternativaTMP.Length; i++)
         {
             Button btn = alternativaTMP[i].GetComponent<Button>();
-            if(alternativaSelecionada != i)
-            {
-                btn.interactable = false;
-            }
-            else
-            {
                 btn.enabled = false;
-            }
-            
         }
     }
-    public void 
+
+    public void CallQuestion(int indiceQuestion)
+    {
+        perguntaAtual = perguntasDoQuiz[indiceQuestion];
+        textoEnunciado.SetText(perguntaAtual.getEnunciado());
+        string[] alternativas = perguntaAtual.getAlternativas();
+        for (int i = 0; i < alternativas.Length; i++)
+        {
+            TextMeshProUGUI alt = alternativaTMP[i].GetComponentInChildren<TextMeshProUGUI>();
+            alt.SetText(alternativas[i]);
+        }
+    }
+    //Faz a chamada do método do script Timer para parar o cronometro
+    void StopTimer()
+    {
+        temporizador.Stop();
+    }
+    //Enquanto o Cronometro Estiver parado Executara uma co - rotina para esperar por 5 segundos e assim chamar a proxima questao
+    public void OnStoppedTimer()
+    {
+        StartCoroutine(WaitingNextQuestion());
+    }
+    IEnumerator WaitingNextQuestion()
+    {
+        indiceQuestion++;
+        if (indiceQuestion < perguntasDoQuiz.Length)
+        {
+            yield return new WaitForSeconds(2f);
+            Debug.Log(perguntasDoQuiz.Length);
+            CallQuestion(indiceQuestion);
+            temporizador.ResetTimer();
+        }
+        else {
+            yield return null;
+        }
+    }
+
+
     // Update is called once per frame
     void Update()
     {
-        
     }
 }
