@@ -12,12 +12,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] alternativaTMP;
     private int indiceQuestion;
     [Header ("Alternar sprites")]
+    [SerializeField] private Sprite spriteDefault;
     [SerializeField] private Sprite spritealtCorreta;
     [SerializeField] private Sprite spritealtIncorreta;
     [SerializeField] private Timer temporizador;
     // Start is called before the first frame update
     void Start()
     {
+
         indiceQuestion = 0;
         temporizador.RegistrarParada(OnStoppedTimer);
         CallQuestion(indiceQuestion);
@@ -26,33 +28,32 @@ public class GameManager : MonoBehaviour
     //Manuseia as op�oes selecionadas
     public void HandleOption(int alternativaSelecionada)
     {
-        DisableOptionButtons();
+        DisableEnableOptionButtons(false);
         StopTimer();
-
+        //Verifica qual foi a alternativa selecionada e se esta correta ou não, para alterar os sprite e dar um retorno visual da resposta
+        Image imgAlternativaSelecionada = alternativaTMP[alternativaSelecionada].GetComponent<Image>();
         if (alternativaSelecionada == perguntaAtual.getRespostaCorreta()){
-            ChangeButtonSprite(alternativaTMP[alternativaSelecionada].GetComponent<Image>(), spritealtCorreta);
-            
-            Debug.Log("ganhoooo");
+            ChangeButtonSprite(imgAlternativaSelecionada, spritealtCorreta);
         }else{
-            ChangeButtonSprite(alternativaTMP[alternativaSelecionada].GetComponent<Image>(), spritealtIncorreta);
-            Debug.Log("perdeuuuuuuu");
-            ChangeButtonSprite(alternativaTMP[perguntaAtual.getRespostaCorreta()].GetComponent<Image>(), spritealtCorreta);
+            Image imgAlternativaCorreta = alternativaTMP[perguntaAtual.getRespostaCorreta()].GetComponent<Image>();
+            ChangeButtonSprite(imgAlternativaSelecionada, spritealtIncorreta);
+            ChangeButtonSprite(imgAlternativaCorreta, spritealtCorreta);
         }
     }
-    //Fun�ao para alterar o sprite dos botoes selecionados
+    //Funcao para alterar o sprite dos botoes selecionados
     public void ChangeButtonSprite(Image imgBtn, Sprite spriteAlt){
         imgBtn.sprite = spriteAlt;
     }
-    //Fun��o para Desabilitar os Botoes desnecess�rios
-    public void DisableOptionButtons()
+    //Funcao para Desabilitar os Botoes desnecess�rios
+    public void DisableEnableOptionButtons(bool isEnable)
     {
         for(int i= 0; i< alternativaTMP.Length; i++)
         {
             Button btn = alternativaTMP[i].GetComponent<Button>();
-                btn.enabled = false;
+                btn.enabled = isEnable;
         }
     }
-
+    //Funcao para Chamar Enunciado e as Questoes do Inicio ao Fim do Quiz
     public void CallQuestion(int indiceQuestion)
     {
         perguntaAtual = perguntasDoQuiz[indiceQuestion];
@@ -63,6 +64,17 @@ public class GameManager : MonoBehaviour
             TextMeshProUGUI alt = alternativaTMP[i].GetComponentInChildren<TextMeshProUGUI>();
             alt.SetText(alternativas[i]);
         }
+    }
+    // Habilita os Botoes Novamente e altera os sprites dos botoes para o spriteDefault
+    public void StartAlternativesBtn()
+    {
+        DisableEnableOptionButtons(true);
+        for (int i = 0; i < alternativaTMP.Length; i++)
+        {
+            Image alternatives = alternativaTMP[i].GetComponentInChildren<Image>();
+            ChangeButtonSprite(alternatives, spriteDefault);
+        }
+        
     }
     //Faz a chamada do método do script Timer para parar o cronometro
     void StopTimer()
@@ -80,7 +92,8 @@ public class GameManager : MonoBehaviour
         if (indiceQuestion < perguntasDoQuiz.Length)
         {
             yield return new WaitForSeconds(2f);
-            Debug.Log(perguntasDoQuiz.Length);
+            StartAlternativesBtn();
+            Debug.Log(indiceQuestion);
             CallQuestion(indiceQuestion);
             temporizador.ResetTimer();
         }
@@ -89,8 +102,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    // Update is called once per frame
     void Update()
     {
     }

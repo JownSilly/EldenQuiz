@@ -342,6 +342,7 @@ MonoBehaviour:
   - {fileID: 290036561}
   - {fileID: 1323504000}
   - {fileID: 1702332431}
+  spriteDefault: {fileID: 21300000, guid: 291fa9818facdd34d9b1a3db2fb91963, type: 3}
   spritealtCorreta: {fileID: 21300000, guid: 1986eef3df885b943aff8ca750581f0f, type: 3}
   spritealtIncorreta: {fileID: 21300000, guid: c0dc94633e694d941856d57b1b7c365f, type: 3}
   temporizador: {fileID: 1355226315}
