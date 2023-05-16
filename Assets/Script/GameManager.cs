@@ -97,36 +97,15 @@ public class GameManager : MonoBehaviour
     //Enquanto o Cronometro Estiver parado Executara uma co - rotina para esperar por 0,5 segundos e assim chamar a proxima questao
     public void OnStoppedTimer()
     {
-        Debug.Log("Antes do Tempo" + indiceQuestion);
+        StartCoroutine(WaitingNextQuestion());   
+    }
+
+    IEnumerator WaitingNextQuestion()
+    {
         indiceQuestion++;
         if (indiceQuestion < perguntasDoQuiz.Length)
         {
-            Invoke("nextQuestion", 0.5f);
-        }
-        else
-        {
-            Debug.Log("Acabou");
-            EndGameScreen();
-        }
-
-        
-    }
-    public void nextQuestion()
-    {
-        StartAlternativesBtn();
-        Debug.Log(indiceQuestion);
-        CallQuestion(indiceQuestion);
-        temporizador.ResetTimer();
-    }
-
-    /*IEnumerator WaitingNextQuestion()
-    {
-        
-        if (indiceQuestion < perguntasDoQuiz.Length)
-        {
-            
             yield return new WaitForSeconds(0.5f);
-            
             StartAlternativesBtn();
             Debug.Log(indiceQuestion);
             CallQuestion(indiceQuestion);
@@ -138,7 +117,7 @@ public class GameManager : MonoBehaviour
             EndGameScreen();
             yield break;
         }
-    }*/
+    }
     void EndGameScreen()
     {
         TextMeshProUGUI FeedbackText = FeedBackTextTMP;
