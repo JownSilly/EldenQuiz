@@ -59,6 +59,5 @@ public class Timer : MonoBehaviour
         currentTime = 0;
         slider.value = currentTime;
         isCounting = true;
-        Debug.Log("Tempo Zerado");
     }
 }

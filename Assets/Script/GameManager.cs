@@ -107,13 +107,10 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(0.5f);
             StartAlternativesBtn();
-            Debug.Log(indiceQuestion);
             CallQuestion(indiceQuestion);
             temporizador.ResetTimer();
         }
         else {
-            
-            Debug.Log("Acabou");
             EndGameScreen();
             yield break;
         }
@@ -136,7 +133,6 @@ public class GameManager : MonoBehaviour
         CallQuestion(indiceQuestion);
         StartAlternativesBtn();
         temporizador.ResetTimer();
-        //StopCoroutine(WaitingNextQuestion());
     }
     void Update()
     {
