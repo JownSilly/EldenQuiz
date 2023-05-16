@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using Slider =  UnityEngine.UI.Slider;
 //[RequireComponent(typeof(Slider))]
 
 public class Timer : MonoBehaviour
@@ -32,12 +32,8 @@ public class Timer : MonoBehaviour
             currentTime += 1 * Time.deltaTime;
             slider.value = currentTime;
             //Se o tempo atual for Maior q o Tempo Maximo, então é chamada a função para para o Cronometro; 
-            if (currentTime > maxTime)
+            if (currentTime > maxTime && onStoppedTimer!=null)
             {
-                if(onStoppedTimer == null)
-                {
-                    return;
-                }
                 Stop();
             }
         }
@@ -54,7 +50,8 @@ public class Timer : MonoBehaviour
             if(onStoppedTimer != null)
             {
                 onStoppedTimer();
-            }
+            
+        }
     }
     //Reinicia o Cronometro do Zero, geralmente chamado ao iniciar um nova Pergunta.
     public void ResetTimer()
@@ -64,9 +61,4 @@ public class Timer : MonoBehaviour
         isCounting = true;
         Debug.Log("Tempo Zerado");
     }
-    /*public void RegistraProximaQuestao(NextQuestion metod){
-        
-        nextQuestion += metod;
-    }
-    */
 }

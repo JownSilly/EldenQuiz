@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdad9b20fd56f844ea1d8516ee5eb2bf, type: 3}
+  m_Name: pergunta - 8
+  m_EditorClassIdentifier: 
+  enunciado: "Qual \xE9 o g\xEAnero de Elden Ring?"
+  alternativas:
+  - "A\xE7\xE3o e aventura"
+  - "Simula\xE7\xE3o"
+  - Esporte
+  - "Estrat\xE9gia em tempo real"
+  respostaCorreta: 0
+  id: questao-8
