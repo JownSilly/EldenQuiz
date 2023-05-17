@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using Image = UnityEngine.UI.Image;
 using Button = UnityEngine.UI.Button;
-using Canvas = UnityEngine.UI.Canvas;
 public class GameManager : MonoBehaviour
 {
     [Header("Questões do Quiz")]
@@ -19,28 +18,25 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite spritealtCorreta;
     [SerializeField] private Sprite spritealtIncorreta;
     [Header("Canvas")]
-    [SerializeField] private Canvas resultadoFeedBack; 
+    [SerializeField] private GameObject resultadoFeedBack; 
     [SerializeField] private GameObject endGame;
-    [SerializeField] private GameObject QuizCanvas;
-    [SerializeField] private GameObject StartGame;
+    [SerializeField] private GameObject quizCanvas;
+    [SerializeField] private GameObject startGame;
     [SerializeField] private TextMeshProUGUI FeedBackTextTMP;
     //Camada Controller
     private int indiceQuestion;
     private int rightAlternatives;
     [SerializeField] private Timer temporizador;
     private bool isClicked;
-    private bool isCorrect;
 
     void Start()
     {
         isClicked= false;
         rightAlternatives = 0;
         indiceQuestion = 0;
-        endGame.SetActive(false);
-        QuizCanvas.SetActive(true);
+        ChangeGameScreen(0);
         temporizador.RegistrarParada(OnStoppedTimer);
         CallQuestion(indiceQuestion);
-        StartAlternativesBtn();
     }
 
     //Botoes Funcoes Chamadas ao Clicar em Um Botao
@@ -70,8 +66,6 @@ public class GameManager : MonoBehaviour
                 isClicked = false;
                 rightAlternatives = 0;
                 indiceQuestion = 0;
-                endGame.SetActive(false);
-                QuizCanvas.SetActive(true);
                 CallQuestion(indiceQuestion);
                 StartAlternativesBtn();
                 temporizador.ResetTimer();
@@ -79,8 +73,9 @@ public class GameManager : MonoBehaviour
         //FeedbackQuestion
             public void FeedbackQuestionAnswer(bool isCorrect)
             {
-                if(isCorrect){
-                    resultadoFeedBack.GetComponent<Canvas>().gameObject.SetActive(true);
+                resultadoFeedBack.GetComponent<Canvas>().gameObject.SetActive(true);
+                if (isCorrect){
+                    
                 }else{
                     Debug.Log("Chama FeedBack = Resposta Incorreta"); 
                 }
@@ -131,9 +126,55 @@ public class GameManager : MonoBehaviour
     //Enquanto o Cronometro Estiver parado Executara uma co - rotina para esperar por 0,5 segundos e assim chamar a proxima questao
     public void OnStoppedTimer()
     {
-        StartCoroutine(WaitingNextQuestion());   
+        //StartCoroutine(WaitingNextQuestion());
+        if(!isClicked){
+            FeedbackQuestionAnswer(false);
+        }
     }
-
+    public void moveToNextQuestion()
+    {
+        indiceQuestion++;
+        if (indiceQuestion < perguntasDoQuiz.Length)
+        {
+            StartAlternativesBtn();
+            CallQuestion(indiceQuestion);
+            temporizador.ResetTimer();
+        }
+        else
+        {
+            ChangeGameScreen(2);
+        }
+    }
+    public void ChangeGameScreen(int Scene)
+    {
+        switch (Scene)
+        {       //StartGameScreen
+            case 0:
+                
+                startGame.SetActive(true);
+                quizCanvas.SetActive(false);
+                endGame.SetActive(false);
+                resultadoFeedBack.SetActive(false);
+                StartAlternativesBtn();
+                break;
+                //QuizCanvas
+            case 1:
+                startGame.SetActive(false);
+                quizCanvas.SetActive(true);
+                endGame.SetActive(false);
+                resultadoFeedBack.SetActive(false);s
+                break;
+                //EndGameOption
+            case 2:
+                TextMeshProUGUI FeedbackText = FeedBackTextTMP;
+                FeedbackText.SetText("Meus Parabéns Guerreiro! \n <size=60%>Você Conseguiu se sobressair e acertou " + rightAlternatives + " questões de " + perguntasDoQuiz.Length + "</size>");
+                startGame.SetActive(false);
+                quizCanvas.SetActive(false);
+                endGame.SetActive(true);
+                break;
+        }
+    }
+    /*
     IEnumerator WaitingNextQuestion()
     {
         indiceQuestion++;
@@ -156,12 +197,13 @@ public class GameManager : MonoBehaviour
     {
         TextMeshProUGUI FeedbackText = FeedBackTextTMP;
         FeedbackText.SetText("Meus Parabéns Guerreiro! \n <size=60%>Você Conseguiu se sobressair e acertou " + rightAlternatives+" questões de "+ perguntasDoQuiz.Length+"</size>");
-        QuizCanvas.SetActive(false);
+        quizCanvas.SetActive(false);
         endGame.SetActive(true);
         
 
     }
-    
+    */
+
     void Update()
     {
     }
