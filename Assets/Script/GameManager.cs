@@ -22,48 +22,46 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject endGame;
     [SerializeField] private GameObject quizCanvas;
     [SerializeField] private GameObject startGame;
-    [SerializeField] private TextMeshProUGUI FeedBackTextTMP;
+    [SerializeField] private TextMeshProUGUI FeedbackTextTMP;
+    [SerializeField] private TextMeshProUGUI FeedbackinGameTextTMP;
     //Camada Controller
     private int indiceQuestion;
     private int rightAlternatives;
     [SerializeField] private Timer temporizador;
-    private bool isClicked;
+    private bool isCorrect;
 
     void Start()
     {
-        isClicked= false;
-        rightAlternatives = 0;
-        indiceQuestion = 0;
-        ChangeGameScreen(0);
         temporizador.RegistrarParada(OnStoppedTimer);
-        CallQuestion(indiceQuestion);
+        ChangeGameScreen(0);
     }
 
     //Botoes Funcoes Chamadas ao Clicar em Um Botao
         //Manuseia as op�oes selecionadas
             public void HandleOption(int alternativaSelecionada)
             {
-                isClicked = true;
                 DisableEnableOptionButtons(false);
                 //Verifica qual foi a alternativa selecionada e se esta correta ou não, para alterar os sprite e dar um retorno visual da resposta
                 Image imgAlternativaSelecionada = alternativaTMP[alternativaSelecionada].GetComponent<Image>();
                 if (alternativaSelecionada == perguntaAtual.getRespostaCorreta()){
+                    
                     ChangeButtonSprite(imgAlternativaSelecionada, spritealtCorreta);
                     rightAlternatives++;
-                    FeedbackQuestionAnswer(true);
+                    isCorrect = true;
                 }else{
                     Image imgAlternativaCorreta = alternativaTMP[perguntaAtual.getRespostaCorreta()].GetComponent<Image>();
                     ChangeButtonSprite(imgAlternativaSelecionada, spritealtIncorreta);
                     ChangeButtonSprite(imgAlternativaCorreta, spritealtCorreta);
-                    FeedbackQuestionAnswer(false);
+                    
+                    isCorrect = false;
                 }
                 
                 StopTimer();
+                
             }
         //Reiniciar o Quiz dosde a Primeira Questao
-            public void ResetGameOnClick()
+            public void StartQuizGame()
             {   
-                isClicked = false;
                 rightAlternatives = 0;
                 indiceQuestion = 0;
                 CallQuestion(indiceQuestion);
@@ -71,14 +69,17 @@ public class GameManager : MonoBehaviour
                 temporizador.ResetTimer();
             }
         //FeedbackQuestion
-            public void FeedbackQuestionAnswer(bool isCorrect)
+            public void FeedbackQuestionAnswer()
             {
                 resultadoFeedBack.GetComponent<Canvas>().gameObject.SetActive(true);
                 if (isCorrect){
-                    
-                }else{
-                    Debug.Log("Chama FeedBack = Resposta Incorreta"); 
+                    resultadoFeedBack.transform.GetChild(1).gameObject.GetComponent<Image>().color = new Color32(0x40, 0xB0, 0x5F,0xFF);
+                    FeedbackinGameTextTMP.SetText("<color=#40B05F>Parabéns, meu Nobre! \n A resposta correta é:</color> \n\n\n <color=white> " + perguntaAtual.getAlternativas()[perguntaAtual.getRespostaCorreta()]+"  </color>");
                 }
+                else{
+                    resultadoFeedBack.transform.GetChild(1).gameObject.GetComponent<Image>().color = new Color32(0xB7, 0x42, 0x42, 0xFF);
+            FeedbackinGameTextTMP.SetText("<color=#B74242>Que pena, errou! Continue tentando \n A resposta correta é:</color> \n\n\n <color=white> " + perguntaAtual.getAlternativas()[perguntaAtual.getRespostaCorreta()] + "  </color>");
+                 }
             }
 
     //Funcao para alterar o sprite dos botoes selecionados
@@ -109,7 +110,6 @@ public class GameManager : MonoBehaviour
     // Habilita os Botoes Novamente e altera os sprites dos botoes para o spriteDefault
     public void StartAlternativesBtn()
     {
-        isClicked = false;
         DisableEnableOptionButtons(true);
         for (int i = 0; i < alternativaTMP.Length; i++)
         {
@@ -127,12 +127,11 @@ public class GameManager : MonoBehaviour
     public void OnStoppedTimer()
     {
         //StartCoroutine(WaitingNextQuestion());
-        if(!isClicked){
-            FeedbackQuestionAnswer(false);
-        }
+        FeedbackQuestionAnswer();
     }
-    public void moveToNextQuestion()
+    public void MoveToNextQuestion()
     {
+        resultadoFeedBack.SetActive(false);
         indiceQuestion++;
         if (indiceQuestion < perguntasDoQuiz.Length)
         {
@@ -147,30 +146,35 @@ public class GameManager : MonoBehaviour
     }
     public void ChangeGameScreen(int Scene)
     {
+        
         switch (Scene)
         {       //StartGameScreen
             case 0:
                 
-                startGame.SetActive(true);
-                quizCanvas.SetActive(false);
-                endGame.SetActive(false);
-                resultadoFeedBack.SetActive(false);
-                StartAlternativesBtn();
+                    startGame.SetActive(true);
+                    quizCanvas.GetComponent<Canvas>().enabled = false;
+                    endGame.SetActive(false);
+                    resultadoFeedBack.SetActive(false);
                 break;
                 //QuizCanvas
             case 1:
-                startGame.SetActive(false);
-                quizCanvas.SetActive(true);
-                endGame.SetActive(false);
-                resultadoFeedBack.SetActive(false);s
+                    startGame.SetActive(false);
+                    quizCanvas.GetComponent<Canvas>().enabled = true;
+                    endGame.SetActive(false);
+                    StartQuizGame();
                 break;
                 //EndGameOption
             case 2:
-                TextMeshProUGUI FeedbackText = FeedBackTextTMP;
-                FeedbackText.SetText("Meus Parabéns Guerreiro! \n <size=60%>Você Conseguiu se sobressair e acertou " + rightAlternatives + " questões de " + perguntasDoQuiz.Length + "</size>");
-                startGame.SetActive(false);
-                quizCanvas.SetActive(false);
-                endGame.SetActive(true);
+                    
+                    FeedbackTextTMP.SetText("Meus Parabéns Guerreiro! \n <size=60%>Você Conseguiu se sobressair e acertou " + rightAlternatives + " questões de " + perguntasDoQuiz.Length + "</size>");
+                    startGame.SetActive(false);
+                    quizCanvas.GetComponent<Canvas>().enabled = false;
+                    endGame.SetActive(true);
+                    
+                break;
+                //Passa para Proxima pergunta ao aperta o botao continuar
+            case 3:
+                    MoveToNextQuestion();
                 break;
         }
     }
