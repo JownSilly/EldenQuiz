@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using Image = UnityEngine.UI.Image;
 using Button = UnityEngine.UI.Button;
+using Canvas = UnityEngine.UI.Canvas;
 public class GameManager : MonoBehaviour
 {
     [Header("Questões do Quiz")]
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite spritealtCorreta;
     [SerializeField] private Sprite spritealtIncorreta;
     [Header("Canvas")]
+    [SerializeField] private Canvas resultadoFeedBack; 
     [SerializeField] private GameObject endGame;
     [SerializeField] private GameObject QuizCanvas;
     [SerializeField] private GameObject StartGame;
@@ -26,9 +28,12 @@ public class GameManager : MonoBehaviour
     private int indiceQuestion;
     private int rightAlternatives;
     [SerializeField] private Timer temporizador;
+    private bool isClicked;
+    private bool isCorrect;
+
     void Start()
     {
-        
+        isClicked= false;
         rightAlternatives = 0;
         indiceQuestion = 0;
         endGame.SetActive(false);
@@ -37,22 +42,50 @@ public class GameManager : MonoBehaviour
         CallQuestion(indiceQuestion);
         StartAlternativesBtn();
     }
-    //Manuseia as op�oes selecionadas
-    public void HandleOption(int alternativaSelecionada)
-    {
-        DisableEnableOptionButtons(false);
-        //Verifica qual foi a alternativa selecionada e se esta correta ou não, para alterar os sprite e dar um retorno visual da resposta
-        Image imgAlternativaSelecionada = alternativaTMP[alternativaSelecionada].GetComponent<Image>();
-        if (alternativaSelecionada == perguntaAtual.getRespostaCorreta()){
-            ChangeButtonSprite(imgAlternativaSelecionada, spritealtCorreta);
-            rightAlternatives++;
-        }else{
-            Image imgAlternativaCorreta = alternativaTMP[perguntaAtual.getRespostaCorreta()].GetComponent<Image>();
-            ChangeButtonSprite(imgAlternativaSelecionada, spritealtIncorreta);
-            ChangeButtonSprite(imgAlternativaCorreta, spritealtCorreta);
-        }
-        StopTimer();
-    }
+
+    //Botoes Funcoes Chamadas ao Clicar em Um Botao
+        //Manuseia as op�oes selecionadas
+            public void HandleOption(int alternativaSelecionada)
+            {
+                isClicked = true;
+                DisableEnableOptionButtons(false);
+                //Verifica qual foi a alternativa selecionada e se esta correta ou não, para alterar os sprite e dar um retorno visual da resposta
+                Image imgAlternativaSelecionada = alternativaTMP[alternativaSelecionada].GetComponent<Image>();
+                if (alternativaSelecionada == perguntaAtual.getRespostaCorreta()){
+                    ChangeButtonSprite(imgAlternativaSelecionada, spritealtCorreta);
+                    rightAlternatives++;
+                    FeedbackQuestionAnswer(true);
+                }else{
+                    Image imgAlternativaCorreta = alternativaTMP[perguntaAtual.getRespostaCorreta()].GetComponent<Image>();
+                    ChangeButtonSprite(imgAlternativaSelecionada, spritealtIncorreta);
+                    ChangeButtonSprite(imgAlternativaCorreta, spritealtCorreta);
+                    FeedbackQuestionAnswer(false);
+                }
+                
+                StopTimer();
+            }
+        //Reiniciar o Quiz dosde a Primeira Questao
+            public void ResetGameOnClick()
+            {   
+                isClicked = false;
+                rightAlternatives = 0;
+                indiceQuestion = 0;
+                endGame.SetActive(false);
+                QuizCanvas.SetActive(true);
+                CallQuestion(indiceQuestion);
+                StartAlternativesBtn();
+                temporizador.ResetTimer();
+            }
+        //FeedbackQuestion
+            public void FeedbackQuestionAnswer(bool isCorrect)
+            {
+                if(isCorrect){
+                    resultadoFeedBack.GetComponent<Canvas>().gameObject.SetActive(true);
+                }else{
+                    Debug.Log("Chama FeedBack = Resposta Incorreta"); 
+                }
+            }
+
     //Funcao para alterar o sprite dos botoes selecionados
     public void ChangeButtonSprite(Image imgBtn, Sprite spriteAlt){
         imgBtn.sprite = spriteAlt;
@@ -81,6 +114,7 @@ public class GameManager : MonoBehaviour
     // Habilita os Botoes Novamente e altera os sprites dos botoes para o spriteDefault
     public void StartAlternativesBtn()
     {
+        isClicked = false;
         DisableEnableOptionButtons(true);
         for (int i = 0; i < alternativaTMP.Length; i++)
         {
@@ -106,6 +140,9 @@ public class GameManager : MonoBehaviour
         if (indiceQuestion < perguntasDoQuiz.Length)
         {
             yield return new WaitForSeconds(0.5f);
+            if(!isClicked){
+                FeedbackQuestionAnswer(false);
+            }
             StartAlternativesBtn();
             CallQuestion(indiceQuestion);
             temporizador.ResetTimer();
@@ -124,16 +161,7 @@ public class GameManager : MonoBehaviour
         
 
     }
-    public void ResetGameOnClick()
-    {
-        rightAlternatives = 0;
-        indiceQuestion = 0;
-        endGame.SetActive(false);
-        QuizCanvas.SetActive(true);
-        CallQuestion(indiceQuestion);
-        StartAlternativesBtn();
-        temporizador.ResetTimer();
-    }
+    
     void Update()
     {
     }
