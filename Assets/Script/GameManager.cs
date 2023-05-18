@@ -68,19 +68,21 @@ public class GameManager : MonoBehaviour
                 StartAlternativesBtn();
                 temporizador.ResetTimer();
             }
-        //FeedbackQuestion
-            public void FeedbackQuestionAnswer()
-            {
-                resultadoFeedBack.GetComponent<Canvas>().gameObject.SetActive(true);
-                if (isCorrect){
-                    resultadoFeedBack.transform.GetChild(1).gameObject.GetComponent<Image>().color = new Color32(0x40, 0xB0, 0x5F,0xFF);
-                    FeedbackinGameTextTMP.SetText("<color=#40B05F>Parabéns, meu Nobre! \n A resposta correta é:</color> \n\n\n <color=white> " + perguntaAtual.getAlternativas()[perguntaAtual.getRespostaCorreta()]+"  </color>");
-                }
-                else{
-                    resultadoFeedBack.transform.GetChild(1).gameObject.GetComponent<Image>().color = new Color32(0xB7, 0x42, 0x42, 0xFF);
+    //FeedbackQuestion
+    public void FeedbackQuestionAnswer()
+    {
+        resultadoFeedBack.GetComponent<Canvas>().gameObject.SetActive(true);
+        if (temporizador.timerIsOver() || !isCorrect)
+        {
+            resultadoFeedBack.transform.GetChild(1).gameObject.GetComponent<Image>().color = new Color32(0xB7, 0x42, 0x42, 0xFF);
             FeedbackinGameTextTMP.SetText("<color=#B74242>Que pena, errou! Continue tentando \n A resposta correta é:</color> \n\n\n <color=white> " + perguntaAtual.getAlternativas()[perguntaAtual.getRespostaCorreta()] + "  </color>");
-                 }
-            }
+        }
+        else
+        {
+            resultadoFeedBack.transform.GetChild(1).gameObject.GetComponent<Image>().color = new Color32(0x40, 0xB0, 0x5F, 0xFF);
+            FeedbackinGameTextTMP.SetText("<color=#40B05F>Parabéns, meu Nobre! \n A resposta correta é:</color> \n\n\n <color=white> " + perguntaAtual.getAlternativas()[perguntaAtual.getRespostaCorreta()] + "  </color>");
+        }
+    }
 
     //Funcao para alterar o sprite dos botoes selecionados
     public void ChangeButtonSprite(Image imgBtn, Sprite spriteAlt){
@@ -94,6 +96,7 @@ public class GameManager : MonoBehaviour
             Button btn = alternativaTMP[i].GetComponent<Button>();
                 btn.enabled = isEnable;
         }
+       
     }
     //Funcao para Chamar Enunciado e as Questoes do Inicio ao Fim do Quiz
     public void CallQuestion(int indiceQuestion)
@@ -166,7 +169,7 @@ public class GameManager : MonoBehaviour
                 //EndGameOption
             case 2:
                     
-                    FeedbackTextTMP.SetText("Meus Parabéns Guerreiro! \n <size=60%>Você Conseguiu se sobressair e acertou " + rightAlternatives + " questões de " + perguntasDoQuiz.Length + "</size>");
+                    FeedbackTextTMP.SetText("Parabéns Meu Nobre Guerreiro! \n <size=60%>Você Conseguiu se sobressair e acertou " + rightAlternatives + " questões de " + perguntasDoQuiz.Length + "</size>");
                     startGame.SetActive(false);
                     quizCanvas.GetComponent<Canvas>().enabled = false;
                     endGame.SetActive(true);

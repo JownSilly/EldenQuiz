@@ -60,4 +60,8 @@ public class Timer : MonoBehaviour
         slider.value = currentTime;
         isCounting = true;
     }
+    public bool timerIsOver()
+    {
+        return currentTime >= maxTime;
+    }
 }
